@@ -10,7 +10,7 @@ if [ -n "$3" ]; then
 else
   repo=libs-trunk-snapshots-local
 fi
-if [[ $repo == "santander-gts-libs-snapshots-local" || $repo == "santander-gts-libs-trunk-local" ||  $repo == "santander-gts-libs-release-local" ]]; then
+if [[ $repo == "libs-snapshots-local" || $repo == "libs-trunk-local" ||  $repo == "libs-release-local" ]]; then
   server=http://user:password@IP:port/artifactory
 fi
 if [ -n "$4" ]; then
