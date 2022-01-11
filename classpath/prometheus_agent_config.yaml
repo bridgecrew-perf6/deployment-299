@@ -1,0 +1,7 @@
+startDelaySeconds: 0
+username:
+password:
+ssl: false
+lowercaseOutputName: false
+lowercaseOutputLabelNames: false
+whitelistObjectNames: ["Hibernate:application=Statistics","com.mchange.v2.c3p0:*","net.sf.ehcache:type=CacheManager,*","java.lang:*","com.zaxxer.hikari:*"]

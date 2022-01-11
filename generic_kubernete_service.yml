@@ -1,0 +1,19 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: servicename
+  labels:
+    run: servicename
+spec:
+  selector:
+    app: servicename
+  type: serviceType
+  ports:
+    - name: servicename
+      port: servicePort
+      protocol: TCP
+      targetPort: servicePort
+#      nodePort: 9999
+    - name: jmx
+      port: 8161
+      protocol: TCP

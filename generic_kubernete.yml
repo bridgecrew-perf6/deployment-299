@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microserviceName
+  labels:
+    app: microserviceName
+spec:
+  selector:
+    matchLabels:
+      app: microserviceName
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: microserviceName
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8161"
+    spec:
+      containers:
+      - name: microserviceName
+        image: imageLink
+        imagePullPolicy: "Always"
+        resources:
+          limits:
+            memory: "maxMemory"
+
+        env:
+        - name: spring.cloud.config.uri
+          value: "URI_CONFIG_SERVER"
+        - name: spring.cloud.config.token
+          value: "TOKEN_CONFIG_SERVER"
+        - name: spring.cloud.config.label
+          value: "LABEL_CONFIG_SERVER"
+        - name: spring.profiles.active
+          value: "PROFILE_CONFIG_SERVER"
+        - name: JAVA_OPT
+          value: "memoryGeneric"
+        ports:
+        - containerPort: 8080
+          name: "ms-port"
+        - containerPort: 8000
+          name: "remote-debug"
+        - containerPort: 9030
+          name: "jmx-port"
+        - containerPort: 8161
+          name: "prometheus"
+        command: commandList
+      hostAliases:
+      - ip: "192.168.10.16"
+        hostnames:
+        - "gluuserver.mercury-tfs.com"
+      - ip: "192.168.10.33"
+        hostnames:
+        - "kafka.mercury-tfs.com"
+      imagePullSecrets:
+      - name: regcred
