@@ -1,0 +1,2 @@
+#name groupId artifactId
+TokenmanagerConfig com/mercurytfs/mercury/cloud tokenmanager.config SVN latest

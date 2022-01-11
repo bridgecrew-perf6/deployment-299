@@ -1,0 +1,4 @@
+#name groupId artifactId repo version ......  IMPORTANTE el groupId separado con / no con puntos .
+CloudConfig com/mercurytfs/mercury/cloud/web cloud.config SVN latest
+LetterManagerFont com/mercurytfs/mercury/modules letterManager.service.impl.db.font SVN latest
+jms-config com/mercurytfs/mercury/ehcache jms-config GIT latest

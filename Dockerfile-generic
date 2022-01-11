@@ -1,0 +1,46 @@
+#Build from base image
+FROM harbor.mercury-tfs.com/mercury/javase
+
+#Variables
+ENV BASE_DIR=mercury
+ENV JAVA_TAR=jdk-8u241-linux-x64.tar.gz
+ENV JAVA_DIR=jdk1.8.0_241
+ENV TZ=Europe/Madrid
+
+#Create dirs
+RUN mkdir /usr/local/$BASE_DIR || true
+RUN mkdir /opt/externallibs || true
+RUN chmod -R 777 /opt/externallibs
+RUN mkdir /opt/apm_lib/ || true
+RUN mkdir /opt/classpath_lib/ || true
+RUN chmod -R 777 /opt/classpath_lib
+RUN mkdir /opt/optionslibs/ || true
+RUN chmod -R 777 /opt/optionslibs
+#Copy stuff
+COPY dependencies/$JAVA_TAR /usr/local/$BASE_DIR
+COPY scripts/initcontainer.sh /usr/local/
+COPY scripts/wait-for-it.sh /usr/local/
+COPY ./addToClasspath.sh /usr/local/
+COPY ./generateDownloadPath.sh /usr/local/
+
+RUN chmod 777 /usr/local/initcontainer.sh
+RUN chmod 777 /usr/local/wait-for-it.sh
+RUN chmod 777 /usr/local/addToClasspath.sh
+RUN chmod 777 /usr/local/generateDownloadPath.sh
+#Install Oracle Java
+RUN cd /usr/local/$BASE_DIR && tar -xvzf $JAVA_TAR
+RUN rm -rf /usr/local/$BASE_DIR/$JAVA_TAR
+RUN update-alternatives --install /usr/bin/java java /usr/local/$BASE_DIR/$JAVA_DIR/jre/bin/java 1500
+RUN update-alternatives --set java /usr/local/$BASE_DIR/$JAVA_DIR/jre/bin/java
+
+#Configure certficate for gluu server
+COPY classpath/gluu.der /usr/local/
+RUN /usr/local/$BASE_DIR/$JAVA_DIR/jre/bin/keytool -import -alias gluu -keystore /usr/local/$BASE_DIR/$JAVA_DIR/jre/lib/security/cacerts -file /usr/local/gluu.der -storepass changeit -noprompt
+
+# -------------------------------------------------------------
+COPY classpath/*.jar /opt/classpath_lib/
+COPY classpath/*.yaml /opt/classpath_lib/
+COPY classpath/*.jks /opt/classpath_lib/
+RUN chmod -R 777 /opt/classpath_lib/
+#Set run mode as Spring Boot War
+ENV RUN_MODE="spring_boot_jar"

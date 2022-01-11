@@ -1,0 +1,1 @@
+#name groupId artifactId repo version ......  IMPORTANTE el groupId separado con / no con puntos .
