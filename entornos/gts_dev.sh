@@ -39,11 +39,11 @@ activeLabel=gts
 baseImage=harbor.mercury-tfs.com/mercury/javase:latest
 #baseImage=produban.javase:latest
 # Repositorio del que se descargaran los artefactos que vayan en el classpath de svn.
-repoSVN=gts-libs-snapshots-local
+repoSVN=libs-snapshots-local
 # Repositorio del que se descargaran los artefactos que vayan en el classpath de git.
-repoGIT=gts-libs-snapshots-local
+repoGIT=libs-snapshots-local
 # Repositorio del que se descargara el artefacto principal.
-repoJar=gts-libs-snapshots-local
+repoJar=libs-snapshots-local
 
 # En el caso de necesitar redefinir para 1 entorno concreto algun Parametros
 # ex. para Sanesback, el group id será distinto, se puede redefinir y pasarlo
